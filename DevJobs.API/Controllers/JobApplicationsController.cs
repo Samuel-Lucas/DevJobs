@@ -17,6 +17,20 @@ namespace DevJobs.API.Controllers
             _repository = repository;
         }
 
+        /// <summary>
+        /// Cadastrar candidato à vaga.
+        /// </summary>
+        /// <remarks>
+        ///   {
+        ///   "name": "Nome do candidato",
+        ///   "email": "Email do candidato"
+        ///   }
+        /// </remarks>
+        /// <param name="id">Id do candidato</param>
+        /// <param name="model">Dados do candidato</param>
+        /// <returns>Sem conteúdo</returns>
+        /// <response code="201">Sucesso</response>
+        /// <response code="400">Dados inválidos.</response>
         [HttpPost]
         public IActionResult Post(int id, AddJobApplicationInputModel model)
         {

@@ -18,6 +18,12 @@ namespace DevJobs.API.Controllers
             _repository = repository;
         }
 
+        /// <summary>
+        /// Listagem de todas as vagas.
+        /// </summary>
+        /// <returns>Vagas de trabalhos</returns>
+        /// <response code="200">Ok</response>
+        /// <response code="404">Not Found</response>
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -26,6 +32,13 @@ namespace DevJobs.API.Controllers
             return Ok(jobVacancies);
         }
 
+        /// <summary>
+        /// Consulta de uma vaga específica
+        /// </summary>
+        /// <param name="id">Id da vaga</param>
+        /// <returns>Uma vaga</returns>
+        /// <response code="200">Ok</response>
+        /// <response code="404">Not Found</response>
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
@@ -72,6 +85,20 @@ namespace DevJobs.API.Controllers
                 jobVacancy);
         }
 
+        /// <summary>
+        /// Editar uma vaga de emprego.
+        /// </summary>
+        /// <remarks>
+        ///   {
+        ///   "title": "Novo título",
+        ///   "description": "Nova descrição"
+        ///   }
+        /// </remarks>
+        /// <param name="id">Id da vaga</param>
+        /// <param name="model">Dados de Vaga</param>
+        /// <returns>Sem conteúdo</returns>
+        /// <response code="204">NoContent</response>
+        /// <response code="400">Dados inválidos.</response>
         [HttpPut("{id}")]
         public IActionResult Put(int id, UpdateJobVacancyInputModel model)
         {
