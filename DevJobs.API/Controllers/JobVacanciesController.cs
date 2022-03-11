@@ -19,7 +19,7 @@ namespace DevJobs.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public IActionResult GetAll()
         {
             var jobVacancies = _repository.GetAll();
 
@@ -37,6 +37,22 @@ namespace DevJobs.API.Controllers
             return Ok(jobVacancy);
         }
 
+        /// <summary>
+        /// Cadastrar uma vaga de emprego.
+        /// </summary>
+        /// <remarks>
+        ///   {
+        ///   "title": "Vaga .NET Jr",
+        ///   "description": "Vaga para uma grande empresa.",
+        ///   "company": "IBM",
+        ///   "isRemote": true,
+        ///   "salaryRange": "3000-5000"
+        ///   }
+        /// </remarks>
+        /// <param name="model">Dados de Vaga</param>
+        /// <returns>Objeto recém criado.</returns>
+        /// <response code="201">Sucesso</response>
+        /// <response code="400">Dados inválidos.</response>
         [HttpPost]
         public IActionResult Post(AddJobVacancyInputModel model)
         {
@@ -57,7 +73,7 @@ namespace DevJobs.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, UpdateJobVacancyInputModel model)
+        public IActionResult Put(int id, UpdateJobVacancyInputModel model)
         {
             var jobVacancy = _repository.GetById(id);
 
@@ -65,7 +81,7 @@ namespace DevJobs.API.Controllers
                 return NotFound();
 
             jobVacancy.Update(model.Title, model.Description);
-            
+
             _repository.Update(jobVacancy);
 
             return NoContent();
