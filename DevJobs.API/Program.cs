@@ -2,6 +2,8 @@ using DevJobs.API.Persistence;
 using DevJobs.API.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Serilog;
+using Serilog.Sinks.MSSqlServer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +39,18 @@ builder.Services.AddSwaggerGen(c =>
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);
 });
+
+builder.Host.ConfigureAppConfiguration((hostingContext, config) => {
+    Serilog.Log.Logger = new LoggerConfiguration()
+            .Enrich.FromLogContext()
+            .WriteTo.MSSqlServer(connectionString,
+                sinkOptions: new MSSqlServerSinkOptions() {
+                    AutoCreateSqlTable = true,
+                    TableName = "DevJobs_Logs"
+                })
+            .WriteTo.Console()
+            .CreateLogger();
+}).UseSerilog();
 
 var app = builder.Build();
 

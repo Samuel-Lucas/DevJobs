@@ -4,6 +4,7 @@ using DevJobs.API.Persistence;
 using DevJobs.API.Persistence.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 namespace DevJobs.API.Controllers
 {
@@ -69,6 +70,8 @@ namespace DevJobs.API.Controllers
         [HttpPost]
         public IActionResult Post(AddJobVacancyInputModel model)
         {
+            Log.Information("Post JobVacancy chamado");
+            
             var jobVacancy = new JobVacancy(
                 model.Title,
                 model.Description,
